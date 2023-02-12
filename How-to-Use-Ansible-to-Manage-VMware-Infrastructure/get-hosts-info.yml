@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  vars:
+    - vcenter_hostname: vcenter.cloudhat.local
+    - vcenter_username: cloudhat@vsphere.local
+    - vcenter_password: VMware1!
+  
+  tasks:
+    - name: Gather hosts info using Community.VMware collection
+      community.vmware.vmware_cluster_info:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: no
+        cluster_name: PH-cluster
+      register: cluster_info
+      
+    - name: Print hosts info
+      debug:
+          var: cluster_info
